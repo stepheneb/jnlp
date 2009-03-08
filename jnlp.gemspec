@@ -1,4 +1,3 @@
-(in /Users/stephen/dev/ruby/src/gems/jnlp-git)
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
