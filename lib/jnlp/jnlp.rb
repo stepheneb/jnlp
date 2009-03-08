@@ -471,7 +471,7 @@ module Jnlp #:nodoc:
   #
   # == Jnlp
   #
-  # A library for encapslating the content and resources referenced by Java Web Start jnlps
+  # A gem for encapsulating the content and resources referenced by Java Web Start jnlps
   #
   # For more information about the structure of Java Web Start see: 
   # * http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html

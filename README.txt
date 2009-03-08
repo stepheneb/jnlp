@@ -1,48 +1,27 @@
-= jnlp
+jnlp
 
-* FIX (url)
+A gem for encapsulating the content and resources referenced by Java Web Start jnlps
 
-== DESCRIPTION:
+Complete rdoc available here: http://rubywebstart.rubyforge.org/jnlp/rdoc/
 
-FIX (describe your package)
+For more information about the structure of Java Web Start see:
 
-== FEATURES/PROBLEMS:
+http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html
 
-* FIX (list of features or problems)
+To create a new Jnlp call Jnlp#new with a string that contains either a local path or a url.
 
-== SYNOPSIS:
+Examples:
 
-  FIX (code sample of usage)
+Creating a new Jnlp object from a local Java Web Start jnlp file. 
 
-== REQUIREMENTS:
+  j = Jnlp::Jnlp.new("authoring.jnlp")
 
-* FIX (list of requirements)
+Creating a new Jnlp object from a Java Web Start jnlp referenced with a url. 
 
-== INSTALL:
+  j = Jnlp::Jnlp.new("jnlp.concord.org/dev/org/concord/maven-jnlp/otrunk-sensor/otrunk-sensor.jnlp")
 
-* FIX (sudo gem install, anything else)
+Once the Jnlp object is created you can call Jnlp#cache_resources to create a local cache of all the jar and nativelib resources. 
 
-== LICENSE:
+The structure of the cache directory and the naming using for the jar and nativelib files is the same as that used by the Java Web Start Download Servlet, see:
 
-(The MIT License)
-
-Copyright (c) 2008 FIX
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/downloadservletguide.html

@@ -4,7 +4,7 @@ AUTHOR = 'Stephen Bannasch'  # can also be an array of Authors
 EMAIL = "stephen.bannasch@gmail.com"
 DESCRIPTION = "For manipulation of Java Web Start Jnlps and the resources they reference."
 GEM_NAME = 'jnlp' # what ppl will type to install your gem
-RUBYFORGE_PROJECT = 'jnlp' # The unix name for your project
+RUBYFORGE_PROJECT = 'rubywebstart' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT}"
 
@@ -53,6 +53,7 @@ $hoe = Hoe.new(GEM_NAME, VERS) do |p|
   p.description = DESCRIPTION
   p.summary = DESCRIPTION
   p.url = HOMEPATH
+  p.remote_rdoc_dir = 'jnlp' # Release to root
   p.rubyforge_name = RUBYFORGE_PROJECT if RUBYFORGE_PROJECT
   p.test_globs = ["test/**/test_*.rb"]
   p.clean_globs |= ['**/.*.sw?', '*.gem', '.config', '**/.DS_Store']  #An array of file patterns to delete on clean.
