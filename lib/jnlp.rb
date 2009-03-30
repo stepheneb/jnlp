@@ -4,5 +4,6 @@ $:.unshift(File.dirname(__FILE__)) unless
 module Jnlp
   require 'jnlp/jnlp.rb'
   require 'jnlp/otrunk.rb'
+  require 'jnlp/maven_jnlp.rb'
   require 'jnlp/version.rb'
 end

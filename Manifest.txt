@@ -9,6 +9,7 @@ lib/jnlp.rb
 lib/jnlp/version.rb
 lib/jnlp/jnlp.rb
 lib/jnlp/otrunk.rb
+lib/jnlp/maven_jnlp.rb
 log/debug.log
 script/console
 script/destroy

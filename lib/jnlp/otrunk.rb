@@ -87,9 +87,9 @@ module Jnlp #:nodoc:
   #
   require "#{File.expand_path(File.dirname(__FILE__))}/jnlp.rb"
   #
-  # Jnlp::Otrunk is a subclass of Jnlp::Jnlp that adds SAIL
-  # SAIL-Otrunk specific methods for execution.of the jnlp
-  # locally without using Java Web Start.
+  # Jnlp::Otrunk is a subclass of Jnlp::Jnlp that adds SAIL-Otrunk[https://confluence.concord.org/display/CSP/OTrunk]
+  # specific methods for execution.of the jnlp locally without 
+  # using Java Web Start.
   #
   # It assumes a default main-class of:
   #

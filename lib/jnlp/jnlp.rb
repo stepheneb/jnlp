@@ -2,7 +2,7 @@
 # :title: Jnlp::Jnlp RDoc
 #
 # to regenerate and display this rdoc: 
-#   rdoc -U -SN jnlp.rb otrunk.rb ; open doc/index.html
+#   rdoc -U -SN jnlp.rb otrunk.rb maven_jnlp.rb; open doc/index.html
 #
 require 'rubygems'
 require 'open-uri'
@@ -956,6 +956,9 @@ module Jnlp #:nodoc:
       cp_jars = @jars.collect {|j| j.local_path}
       cp_nativelibs = @nativelibs.collect {|n| n.local_path}
       resources = cp_jars + cp_nativelibs
+      #
+      # FIXME: this should probably be more discriminatory 
+      #
       if options[:remove_jruby]
         resources = resources.reject {|r| r =~ /\/jruby\//}
       end
@@ -1037,6 +1040,9 @@ module Jnlp #:nodoc:
     #
     # This will add all the jars for this jnlp to the effective
     # classpath for this Java process.
+    # 
+    # *If* you are already running in JRuby *AND* the jnlp references a 
+    # JRuby resource the JRuby resource will not be required.
     #
     def require_resources
       if RUBY_PLATFORM =~ /java/

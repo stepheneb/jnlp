@@ -1,3 +1,15 @@
+== 0.0.4 2009-03-30
+
+* added MavenJnlp class for encapsulating jnlp resources served
+by a MavenJnlp Java Web Start server.
+
+* specified a dependency on hpricot v 0.6.164, so far v0.7
+doesn't support JRUby
+
+== 0.0.3 2009-02
+
+* extended OTrunk capability and integration with JRuby
+
 == 0.0.1 2008-04-14
 
 * 1 major enhancement:
