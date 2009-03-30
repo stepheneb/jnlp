@@ -562,37 +562,8 @@ module Jnlp #:nodoc:
   #
   # Note:
   #
-  # The current Hpricot v6.0 Gem does not work with JRuby 1.1 release candidates
-  #
-  # You can get a version that does work here:
-  #
-  #    http://www.telscenter.org/confluence/download/attachments/20236/hpricot-0.6.159-java.gem
-  # 
-  # After you download it -- install it like this:
-  #
-  #   jruby -S gem install pkg/hpricot-0.6.159-jruby.gem
-  # 
-  # FYI: If you need to build it yourself (Nick Sieger's patch still applies 
-  # cleanly to the current trunk revision: 161 of Hpricot):
-  # 
-  #   svn co  https://code.whytheluckystiff.net/svn/hpricot/trunk hpricot
-  #   cd hpricot
-  #   curl http://caldersphere.net/hpricot-0.6.157-jruby-trunk.patch > hpricot-0.6.157-jruby-trunk.patch
-  #   patch -p0 -i hpricot-0.6.157-jruby-trunk.patch
-  #   jruby -S rake package_jruby
-  #
-  # You'll find the gem here:
-  #
-  #   pkg/hpricot-0.6.159-jruby.gem
-  #
-  # If you want to run the tests (there is only one failing test in JRuby Hpricot,  C Hpricot has two different failures):
-  # 
-  #   jruby -S rake hpricot_java
-  #   jruby -S rake test
-  # 
-  # I reported all this on why's tracker for hpricot:
-  # 
-  #   https://code.whytheluckystiff.net/hpricot/ticket/131#comment:1
+  # The jnlp gem has a dependency on hpricot version 0.6.164.
+  # The most recent version of hpricot, version 0.7.0 does not yet work with JRuby.
   # 
   class Jnlp
     #
