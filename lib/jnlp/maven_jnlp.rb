@@ -221,5 +221,51 @@ module Jnlp #:nodoc:
         @maven_jnlp_families << maven_jnlp_family
       end
     end
+    
+    #
+    # summarize
+    #
+    # Display a summary of the jnlp families and versions 
+    # available on stdout.
+    #
+    # Example:
+    #
+    #   require 'jnlp'
+    #   mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/')
+    #   mj.summarize                 
+    #   
+    #   Maven Jnlp families: 26
+    #   
+    #   name: all-otrunk-snapshot
+    #     versions: 1568
+    #     current snapshot version: 0.1.0-20090327.222627
+    #   
+    #   name: all-otrunk-snapshot-with-installer
+    #     versions: 167
+    #     current snapshot version: 0.1.0-20090327.222727
+    #   
+    #   name: capa-measuring-resistance
+    #     versions: 1496
+    #     current snapshot version: 0.1.0-20090327.222729
+    #   
+    #   name: capa-otrunk
+    #     versions: 1172
+    #     current snapshot version: 0.1.0-20090327.222733
+    #
+    #   ...
+    #
+    def summarize
+      puts 
+      puts "Maven Jnlp families: #{@maven_jnlp_families.length}"
+      puts
+      @maven_jnlp_families.each do |family|
+        puts "name: #{family.name}"
+        puts "  versions: #{family.versions.length}"
+        puts "  current snapshot version: #{family.snapshot_version}"
+        puts
+      end
+      puts
+    end
+
   end
 end
