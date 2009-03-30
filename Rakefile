@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'hoe'
+
 require './lib/jnlp.rb'
 
 Hoe.new('jnlp', Jnlp::VERSION) do |p|

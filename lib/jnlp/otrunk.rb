@@ -11,12 +11,12 @@ require 'net/http'
 require 'date'
 
 if RUBY_PLATFORM =~ /java/
-  import java.util.jar.JarInputStream unless defined? JarInputStream
-  import java.io.FileInputStream unless defined? FileInputStream
-  import java.net.URL unless defined? URL
-  import java.util.Collection unless defined? Collection
-  import java.util.List unless defined? List
-  import java.util.ArrayList unless defined? ArrayList
+  java_import java.util.jar.JarInputStream unless defined? JarInputStream
+  java_import java.io.FileInputStream unless defined? FileInputStream
+  java_import java.net.URL unless defined? URL
+  java_import java.util.Collection unless defined? Collection
+  java_import java.util.List unless defined? List
+  java_import java.util.ArrayList unless defined? ArrayList
   #
   # Used to refer to Java classes in the java.io package.
   # Some of the class names in the java.io package have the

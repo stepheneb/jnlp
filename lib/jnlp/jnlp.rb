@@ -13,9 +13,9 @@ require 'date'
 
 if RUBY_PLATFORM =~ /java/
   include Java
-  import java.util.jar.JarInputStream unless defined? JarInputStream
-  import java.io.FileInputStream unless defined? FileInputStream
-  import java.net.URL unless defined? URL
+  java_import java.util.jar.JarInputStream unless defined? JarInputStream
+  java_import java.io.FileInputStream unless defined? FileInputStream
+  java_import java.net.URL unless defined? URL
 end
 
 unless Net::HTTP::Get.new('/')['User-Agent'] # unless a 'User-Agent' is already defined add one
