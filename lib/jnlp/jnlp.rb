@@ -220,6 +220,14 @@ module Jnlp #:nodoc:
     #
     #   "httpclient__V0.1.0-20071212.220020-17.jar"
     #
+    attr_reader :suffix
+    #
+    # Contains the suffix of the resource
+    #
+    # Example:
+    #
+    #   "__V0.1.0.jar"
+    #
     attr_reader :filename
     #
     # Contains the filename of the gzipped pack200 version of the resource
@@ -227,6 +235,14 @@ module Jnlp #:nodoc:
     # Example:
     #
     #   "httpclient__V0.1.0-20071212.220020-17.jar.pack.gz"
+    #
+    attr_reader :filename_pack
+    #
+    # Contains the filename of the pack200 version of the resource
+    #
+    # Example:
+    #
+    #   "httpclient__V0.1.0-20071212.220020-17.jar.pack"
     #
     attr_reader :filename_pack_gz
     #
@@ -825,6 +841,7 @@ module Jnlp #:nodoc:
         @title = (info/"title").inner_html
         @vendor = (info/"vendor").inner_html
         @homepage = (info/"homepage").empty? ? '' : (info/"homepage").attr('href')
+        @description = (info/"description").empty? ? '' : (info/"description").inner_html
         icon = (info/"icon")
         @icon = Icon.new(icon) unless icon.empty?
         @offline_allowed = (info/"offline-allowed") ? true : false
