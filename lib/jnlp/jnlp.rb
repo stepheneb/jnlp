@@ -189,6 +189,13 @@ module Jnlp #:nodoc:
     #
     #   "net/sf/sail/webstart-proxy/jetty-proxy/jetty-proxy.jar"
     #
+    attr_reader :main
+    #
+    # Contains a boolean that repesents whether the main_class for this
+    # jnlp is contained within this jar.
+    # This attribute is optional in a jnlp and if present should 
+    # only be present and set to true on one jar resource in a jnlp.
+    #
     attr_reader :href
     #
     # Contains the url reference to the resource
@@ -332,6 +339,7 @@ module Jnlp #:nodoc:
     def initialize(res, codebase, os)
       @resource = res
       @kind = res.name
+      @main = res['main'] && res['main'] == 'true'
       @href = res['href']
       @href_path = File.dirname(@href)
       if @href_path == '.'
