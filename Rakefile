@@ -12,3 +12,8 @@ Hoe.new('jnlp', Jnlp::VERSION) do |p|
   p.description = "For manipulation of Java Web Start Jnlps and the resources they reference."
   p.extra_deps << ['hpricot','=0.6.164']
 end
+
+task :default => :spec
+Spec::Rake::SpecTask.new do |t|
+  t.spec_files = FileList["spec/**/*_spec.rb"]
+end
