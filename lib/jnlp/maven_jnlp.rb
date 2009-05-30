@@ -133,8 +133,15 @@ module Jnlp #:nodoc:
             @snapshot = versioned_jnlp_url
           end
         end
-        
       end
+    end
+    
+    def update
+      
+    end
+    
+    def latest_snapshot_version
+      open("#{@url}/#{@name}-CURRENT_VERSION.txt").read
     end
   end
 
