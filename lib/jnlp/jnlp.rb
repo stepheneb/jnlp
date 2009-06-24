@@ -352,6 +352,16 @@ module Jnlp #:nodoc:
     #   72
     #
     attr_reader :revision
+    #
+    # Contains the certificate version of the resource
+    # if one exists, otherwize it is nil
+    #
+    # Example:
+    #
+    #   "s1"
+    #
+    attr_reader :certificate_version
+    #
     def initialize(res, codebase, os)
       @resource = res
       @kind = res.name
@@ -373,29 +383,73 @@ module Jnlp #:nodoc:
       @filename = "#{@name}#{@suffix}"
       @filename_pack = @filename + ".pack"
       @filename_pack_gz = @filename_pack + ".gz"
-      # example: "0.1.0-20070926.155656-107"
-      # but ... 
-      # some version strings just look like this: "0.1.0"
-      # or this: "2.1.7-r2"
+
       @url = "#{codebase}/#{@href_path}#{@name}.jar"
       @url << "?version-id=#{@version_str}" if @version_str
       # example: data-util__V0.1.0-20070926.155656-107.jar.pack
       # @url_pack = "#{codebase}/#{@href_path}#{@filename}.pack"
       # example: data-util__V0.1.0-20070926.155656-107.jar.pack.gz
       @url_pack_gz = "#{codebase}/#{@href_path}#{@filename}.pack.gz"
-      if @version_str && @version_str[/-[\d]{8}.[\d]{6}-/] && version_data = /(.*)-(.*)-(.*)/.match(@version_str)
-        @version = version_data[1]
-        @revision = version_data[3] && version_data[3].to_i
-        @date_str = version_data[2]               # example: "20070926.155656"
-        d, t = @date_str.scan(/\d+/)              # => ["20070926", "155656"]
-        d1 = "#{d[0..3]}-#{d[4..5]}-#{d[6..7]}"   # => "2007-09-26"
-        t1 = "#{t[0..1]}:#{t[2..3]}:#{t[4..5]}"   # => "15:56:56"
-        dt = "-#{d1}T#{t1}Z"                      # => "-2007-09-26T15:56:56Z"
-        @date_time = DateTime.parse(dt)           # => #<DateTime: 10673317777/10800,0,2299161>
-      else
-        @version = @version_str                   # some version strings just look like this: "0.1.0"
-      end
+      @version, @revision, @date_str, @date_time, @certificate_version = parse_version_str(@version_str)
       @os = os
+    end
+    #
+    # parse_version_str
+    #
+    # input examples:
+    # 
+    #  "0.1.0-20070926.155656-107"
+    #
+    # or a newer example:
+    #
+    #  "0.1.0-20090618.143130-890-s1"
+    #
+    # but ... some version strings just look like this:
+    # 
+    #  "0.1.0"
+    #
+    # or this:
+    #
+    #  "2.1.7-r2"
+    #
+    # results:
+    #
+    # version                # => '0.1.0'
+    # revision               # => 20
+    # date_str               # => '20070926.155656'
+    # date_time              # => #<DateTime: 10673317777/10800,0,2299161>
+    # certificate_version    # => 's1'
+    #
+    def parse_version_str(version_str)      
+      version = date_str = certificate_version = ''
+      revision = date_time = nil
+      if version_str && version_str.length > 0
+        if md = version_str.match(/(\d|\.)+/)
+          version = md[0]
+          # date_str
+          if md2 = md.post_match.match(/-([\d]{8}.[\d]{6})(-|$)/)
+            date_str = md2[1]
+            d, t = date_str.scan(/\d+/)              # => ["20070926", "155656"]
+            d1 = "#{d[0..3]}-#{d[4..5]}-#{d[6..7]}"   # => "2007-09-26"
+            t1 = "#{t[0..1]}:#{t[2..3]}:#{t[4..5]}"   # => "15:56:56"
+            dt = "#{d1}T#{t1}Z"                      # => "2007-09-26T15:56:56Z"
+            date_time = DateTime.parse(dt)           # => #<DateTime: 10673317777/10800,0,2299161>
+            # revision
+            if md3 = md2.post_match.match(/\d+/)
+              revision = md3[0].to_i
+            end
+          else
+            if match = md.post_match[/\d+/]
+              revision = match.to_i
+            end
+          end
+          # certificate_version
+          if match = md.post_match[/-(s\d+)/, 1]
+            certificate_version = match
+          end
+        end
+      end
+      [version, revision, date_str, date_time, certificate_version]
     end
     #
     # Set's up the local cache directory references
@@ -1043,6 +1097,9 @@ module Jnlp #:nodoc:
     def require_resources
       if RUBY_PLATFORM =~ /java/
         resource_paths(:remove_jruby => true).each {|res| require res}
+        true
+      else
+        false
       end
     end
     #
