@@ -2,11 +2,12 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Jnlp do
   before(:all) do
-    @path = File.join(File.dirname(__FILE__), 'fixtures', 'all-otrunk-snapshot-0.1.0-20070420.131610.jnlp')
+    @first_jnlp_path = File.join(File.dirname(__FILE__), 'fixtures', 'all-otrunk-snapshot-0.1.0-20070420.131610.jnlp')
     @gem_dir = File.expand_path(File.dirname(__FILE__))
-    @first_jnlp = Jnlp::Jnlp.new(@path)
+    @first_jnlp = Jnlp::Jnlp.new(@first_jnlp_path)    
     @first_jar = @first_jnlp.jars.first
     @last_jar = @first_jnlp.jars[-1]
+    @rhino_javascript_jar = @first_jnlp.jars.find { |jar| jar.name == 'js' }
     @first_nativelib = @first_jnlp.nativelibs.first
     @last_nativelib = @first_jnlp.nativelibs[-1]
   end
@@ -47,8 +48,8 @@ describe Jnlp do
     @first_jnlp.href.should == 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'
   end
 
-  it "should have an path attribute with the value #{@path}" do
-    @first_jnlp.path.should == @path
+  it "should have an path attribute with the value #{@first_jnlp_path}" do
+    @first_jnlp.path.should == @first_jnlp_path
   end
 
   it "should have an max_heap_size attribute with the value '128m'" do
@@ -85,6 +86,37 @@ describe Jnlp do
     @first_jnlp.jars.length == 67
   end
 
+  # <jar href="org/concord/loader/loader.jar" version="0.1.0-20070419.035822-17"/>
+  
+  it "first jar should have the correct attributes" do
+    @first_jar.filename_pack.should == 'loader__V0.1.0-20070419.035822-17.jar.pack'
+    @first_jar.href.should == 'org/concord/loader/loader.jar'
+
+    @first_jar.version.should == '0.1.0'
+    @first_jar.revision.should == 17
+    @first_jar.certificate_version.should == ''
+    @first_jar.date_str.should == '20070419.035822'
+    @first_jar.date_time.should == DateTime.parse("2007-04-19T03:58:22Z")
+    
+    @first_jar.href_path.should == 'org/concord/loader/'
+    @first_jar.url.should == 'http://jnlp.concord.org/dev/org/concord/loader/loader.jar?version-id=0.1.0-20070419.035822-17'
+    @first_jar.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/concord/loader/loader__V0.1.0-20070419.035822-17.jar.pack.gz'
+
+    @first_jar.kind.should == 'jar'
+
+    @first_jar.name.should == 'loader'
+    @first_jar.os.should == nil
+    @first_jar.suffix.should == '__V0.1.0-20070419.035822-17.jar'
+    @first_jar.filename.should == 'loader__V0.1.0-20070419.035822-17.jar'
+    @first_jar.filename_pack_gz.should == 'loader__V0.1.0-20070419.035822-17.jar.pack.gz'
+  end
+
+
+  it "rhino javascript jar should have the correct version and revision attributes" do
+    @rhino_javascript_jar.version.should == '1.5'
+    @rhino_javascript_jar.revision.should == 4
+  end
+
   it "should have 2 native libraries" do
     @first_jnlp.nativelibs.length == 2
   end
@@ -92,7 +124,13 @@ describe Jnlp do
   it "first nativelib should have the correct attributes" do
     @first_nativelib.filename_pack.should == 'vernier-goio-win32-nar__V0.1.0.jar.pack'
     @first_nativelib.href.should == 'org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar.jar'
+
     @first_nativelib.version.should == '0.1.0'
+    @first_nativelib.revision.should == nil
+    @first_nativelib.certificate_version.should == ''
+    @first_nativelib.date_str.should == ''
+    @first_nativelib.date_time.should == nil
+    
     @first_nativelib.href_path.should == 'org/concord/sensor/vernier/vernier-goio/'
     @first_nativelib.url.should == 'http://jnlp.concord.org/dev/org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar.jar?version-id=0.1.0'
     @first_nativelib.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar__V0.1.0.jar.pack.gz'
