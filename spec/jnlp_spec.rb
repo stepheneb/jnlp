@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Jnlp do
   before(:all) do
-    @first_jnlp_path = File.join(File.dirname(__FILE__), 'fixtures', 'all-otrunk-snapshot-0.1.0-20070420.131610.jnlp')
+    @first_jnlp_path = File.join(File.dirname(__FILE__), 'fixtures', 'all-otrunk-snapshot-0.1.0-20091221.214313.jnlp')
     @gem_dir = File.expand_path(File.dirname(__FILE__))
     @first_jnlp = Jnlp::Jnlp.new(@first_jnlp_path)    
     @first_jar = @first_jnlp.jars.first
@@ -12,8 +12,8 @@ describe Jnlp do
     @last_nativelib = @first_jnlp.nativelibs[-1]
   end
 
-  it "should be named all-otrunk-snapshot-0.1.0-20070420.131610.jnlp" do
-    @first_jnlp.name.should == 'all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'
+  it "should be named all-otrunk-snapshot-0.1.0-20091221.214313.jnlp" do
+    @first_jnlp.name.should == 'all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'
   end
 
   it "should have an offline_allowed attribute with the value true" do
@@ -44,8 +44,8 @@ describe Jnlp do
     @first_jnlp.initial_heap_size.should == '32m'
   end
 
-  it "should have an href attribute with the value 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'" do
-    @first_jnlp.href.should == 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'
+  it "should have an href attribute with the value 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'" do
+    @first_jnlp.href.should == 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'
   end
 
   it "should have an path attribute with the value #{@first_jnlp_path}" do
@@ -60,6 +60,10 @@ describe Jnlp do
     @first_jnlp.j2se_version.should == '1.5+'
   end
 
+  it "should have an j2se_version attribute with the value '1.5 if mac_os_x is specified'" do
+    @first_jnlp.j2se_version('mac_os_x').should == '1.5'
+  end
+
   it "should have an vendor attribute with the value 'Concord Consortium'" do
     @first_jnlp.vendor.should == 'Concord Consortium'
   end
@@ -68,18 +72,18 @@ describe Jnlp do
     @first_jnlp.description.should == 'Preview Basic Pas'
   end
 
-  it "should have an local_jnlp_name attribute with the value 'local-all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'" do
-    @first_jnlp.local_jnlp_name.should == 'local-all-otrunk-snapshot-0.1.0-20070420.131610.jnlp'
+  it "should have an local_jnlp_name attribute with the value 'local-all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'" do
+    @first_jnlp.local_jnlp_name.should == 'local-all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'
   end
 
   it "should have an local_jnlp_href attribute" do
     @first_jnlp.local_jnlp_href == "#{@gem_dir}/spec/fixtures/#{@first_jnlp.local_jnlp_name}"
   end
 
-  it "should have one property with the name: 'maven.jnlp.version' and the value 'all-otrunk-snapshot-0.1.0-20070420.131610'" do
+  it "should have one property with the name: 'maven.jnlp.version' and the value 'all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'" do
     @first_jnlp.properties.length.should == 1
     @first_jnlp.properties.first.name.should == 'maven.jnlp.version'
-    @first_jnlp.properties.first.value.should == 'all-otrunk-snapshot-0.1.0-20070420.131610'
+    @first_jnlp.properties.first.value.should == 'all-otrunk-snapshot-0.1.0-20091221.214313'
   end
 
   it "should have 67 jars" do
@@ -89,26 +93,26 @@ describe Jnlp do
   # <jar href="org/concord/loader/loader.jar" version="0.1.0-20070419.035822-17"/>
   
   it "first jar should have the correct attributes" do
-    @first_jar.filename_pack.should == 'loader__V0.1.0-20070419.035822-17.jar.pack'
-    @first_jar.href.should == 'org/concord/loader/loader.jar'
+    @first_jar.filename_pack.should == 'sail-otrunk__V0.1.0-20091028.054139-1083.jar.pack'
+    @first_jar.href.should == 'org/telscenter/sail-otrunk/sail-otrunk.jar'
 
     @first_jar.version.should == '0.1.0'
-    @first_jar.revision.should == 17
+    @first_jar.revision.should == 1083
     @first_jar.certificate_version.should == ''
-    @first_jar.date_str.should == '20070419.035822'
-    @first_jar.date_time.should == DateTime.parse("2007-04-19T03:58:22Z")
+    @first_jar.date_str.should == '20091028.054139'
+    @first_jar.date_time.should == DateTime.parse("2009-10-28T05:41:39Z")
     
-    @first_jar.href_path.should == 'org/concord/loader/'
-    @first_jar.url.should == 'http://jnlp.concord.org/dev/org/concord/loader/loader.jar?version-id=0.1.0-20070419.035822-17'
-    @first_jar.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/concord/loader/loader__V0.1.0-20070419.035822-17.jar.pack.gz'
+    @first_jar.href_path.should == 'org/telscenter/sail-otrunk/'
+    @first_jar.url.should == 'http://jnlp.concord.org/dev/org/telscenter/sail-otrunk/sail-otrunk.jar?version-id=0.1.0-20091028.054139-1083'
+    @first_jar.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/telscenter/sail-otrunk/sail-otrunk__V0.1.0-20091028.054139-1083.jar.pack.gz'
 
     @first_jar.kind.should == 'jar'
 
-    @first_jar.name.should == 'loader'
+    @first_jar.name.should == 'sail-otrunk'
     @first_jar.os.should == nil
-    @first_jar.suffix.should == '__V0.1.0-20070419.035822-17.jar'
-    @first_jar.filename.should == 'loader__V0.1.0-20070419.035822-17.jar'
-    @first_jar.filename_pack_gz.should == 'loader__V0.1.0-20070419.035822-17.jar.pack.gz'
+    @first_jar.suffix.should == '__V0.1.0-20091028.054139-1083.jar'
+    @first_jar.filename.should == 'sail-otrunk__V0.1.0-20091028.054139-1083.jar'
+    @first_jar.filename_pack_gz.should == 'sail-otrunk__V0.1.0-20091028.054139-1083.jar.pack.gz'
   end
 
 
@@ -122,26 +126,26 @@ describe Jnlp do
   end
 
   it "first nativelib should have the correct attributes" do
-    @first_nativelib.filename_pack.should == 'vernier-goio-win32-nar__V0.1.0.jar.pack'
-    @first_nativelib.href.should == 'org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar.jar'
+    @first_nativelib.filename_pack.should == 'rxtx-serial-linux-nar__V2.1.7-r2.jar.pack'
+    @first_nativelib.href.should == 'org/concord/external/rxtx/rxtx-serial/rxtx-serial-linux-nar.jar'
 
-    @first_nativelib.version.should == '0.1.0'
-    @first_nativelib.revision.should == nil
+    @first_nativelib.version.should == '2.1.7'
+    @first_nativelib.revision.should == 2
     @first_nativelib.certificate_version.should == ''
     @first_nativelib.date_str.should == ''
     @first_nativelib.date_time.should == nil
     
-    @first_nativelib.href_path.should == 'org/concord/sensor/vernier/vernier-goio/'
-    @first_nativelib.url.should == 'http://jnlp.concord.org/dev/org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar.jar?version-id=0.1.0'
-    @first_nativelib.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/concord/sensor/vernier/vernier-goio/vernier-goio-win32-nar__V0.1.0.jar.pack.gz'
+    @first_nativelib.href_path.should == 'org/concord/external/rxtx/rxtx-serial/'
+    @first_nativelib.url.should == 'http://jnlp.concord.org/dev/org/concord/external/rxtx/rxtx-serial/rxtx-serial-linux-nar.jar?version-id=2.1.7-r2'
+    @first_nativelib.url_pack_gz.should == 'http://jnlp.concord.org/dev/org/concord/external/rxtx/rxtx-serial/rxtx-serial-linux-nar__V2.1.7-r2.jar.pack.gz'
 
     @first_nativelib.kind.should == 'nativelib'
 
-    @first_nativelib.name.should == 'vernier-goio-win32-nar'
-    @first_nativelib.os.should == 'windows'
-    @first_nativelib.suffix.should == '__V0.1.0.jar'
-    @first_nativelib.filename.should == 'vernier-goio-win32-nar__V0.1.0.jar'
-    @first_nativelib.filename_pack_gz.should == 'vernier-goio-win32-nar__V0.1.0.jar.pack.gz'
+    @first_nativelib.name.should == 'rxtx-serial-linux-nar'
+    @first_nativelib.os.should == 'linux'
+    @first_nativelib.suffix.should == '__V2.1.7-r2.jar'
+    @first_nativelib.filename.should == 'rxtx-serial-linux-nar__V2.1.7-r2.jar'
+    @first_nativelib.filename_pack_gz.should == 'rxtx-serial-linux-nar__V2.1.7-r2.jar.pack.gz'
 
   end
 end
