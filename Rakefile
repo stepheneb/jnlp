@@ -3,14 +3,14 @@ require 'hoe'
 
 require './lib/jnlp.rb'
 
-Hoe.new('jnlp', Jnlp::VERSION) do |p|
-  p.rubyforge_name = 'rubywebstart' # if different than lowercase project name
-  p.author = 'Stephen Bannasch'
-  p.email = 'stephen.bannasch@gmail.com'
-  p.url = 'http://rubywebstart.rubyforge.org/jnlp/rdoc/'
-  p.summary = "Ruby tools for working with Java Web Start JNLPs."
-  p.description = "For manipulation of Java Web Start Jnlps and the resources they reference."
-  p.extra_deps << ['hpricot','=0.6.164']
+Hoe.spec 'jnlp' do |spec|
+  spec.rubyforge_name = 'rubywebstart' # if different than lowercase project name
+  spec.author = 'Stephen Bannasch'
+  spec.email = 'stephen.bannasch@gmail.com'
+  spec.url = 'http://rubywebstart.rubyforge.org/jnlp/rdoc/'
+  spec.summary = "Ruby tools for working with Java Web Start JNLPs."
+  spec.description = "For manipulation of Java Web Start Jnlps and the resources they reference."
+  spec.extra_deps << ['hpricot','=0.6.164']
 end
 
 task :default => :spec
