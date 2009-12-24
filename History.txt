@@ -1,3 +1,7 @@
+== 0.0.5.3 2009-12-23
+
+remove older files, specs for jnlp with jars without explicit version attributes
+
 == 0.0.5.2 2009-12-23
 
 * add support for os-specific j2se elements
