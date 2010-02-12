@@ -41,3 +41,8 @@ The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/t
 
   git clone git://github.com/stepheneb/jnlp.git
 
+=== Running the tests
+
+In JRuby: jruby -S rake spec
+In MRI:   rake spec
+
