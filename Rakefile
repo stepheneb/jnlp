@@ -1,6 +1,9 @@
 require 'rubygems'
 require 'hoe'
 
+gem 'ci_reporter'
+require 'ci/reporter/rake/rspec'
+
 require './lib/jnlp.rb'
 
 Hoe.spec 'jnlp' do |spec|
