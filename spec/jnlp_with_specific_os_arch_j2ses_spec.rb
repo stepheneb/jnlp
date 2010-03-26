@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
 
-describe Jnlp do
+describe 'Jnlp with specific os/arch/j2se' do
   before(:all) do
     @jnlp_with_specific_os_arch_j2ses_path = File.join(File.dirname(__FILE__), 'fixtures', 'all-otrunk-snapshot-0.1.0-20100211.193744.jnlp')
     @jnlp_with_specific_os_arch_j2ses = Jnlp::Jnlp.new(@jnlp_with_specific_os_arch_j2ses_path)

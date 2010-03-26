@@ -46,4 +46,5 @@ The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/t
 
 In JRuby: jruby -S rake spec
 In MRI:   rake spec
+In Hudson: rake hudson:spec
 
