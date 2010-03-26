@@ -1,6 +1,7 @@
 == jnlp
 
 A gem for encapsulating the content and resources referenced by Java Web Start jnlps
+and interacting with jnlp repositories managed by the maven-jnlp Eclipse plugin.
 
 Complete rdoc available here: http://rubywebstart.rubyforge.org/jnlp/Jnlp/Jnlp.html
 
