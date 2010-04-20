@@ -65,7 +65,7 @@ end
 
 # Documentation tasks
 #
-# You can generte the doc by hand as follows:
+# You can generate the doc by hand as follows:
 #
 #   rdoc -U --main=README.rdoc --title='Jnlp::Jnlp' README.rdoc History.txt License.txt lib
 #
@@ -90,15 +90,6 @@ rescue LoadError
     rdoc.main = "README.rdoc"
     rdoc.title = 'Jnlp::Jnlp'
     rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
-  end
-end
-
-begin
-  require 'yard'
-  YARD::Rake::YardocTask.new
-rescue LoadError
-  task :yardoc do
-    abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"
   end
 end
 
