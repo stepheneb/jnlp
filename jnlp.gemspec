@@ -13,13 +13,13 @@ Gem::Specification.new do |s|
   s.date = '2010-02-11'
   s.rubyforge_project = 'rubywebstart'
 
-  s.rdoc_options = ["--main", "README"]
-  s.extra_rdoc_files = %w{ History.txt License.txt README}
+  s.rdoc_options = ["--main", "README.rdoc"]
+  s.extra_rdoc_files = %w{ History.txt License.txt README.rdoc}
   
   s.required_rubygems_version = ">= 1.3.2"
   s.require_path = 'lib'
 
-  s.files =  Dir.glob("{lib,spec}/**/*.{rb}") + %w{ History.txt License.txt README Rakefile jnlp.gemspec }
+  s.files =  Dir.glob("{lib,spec}/**/*.{rb}") + %w{ History.txt License.txt README.rdoc Rakefile jnlp.gemspec }
 
   s.add_runtime_dependency('hpricot', "= 0.6.164")  
   s.add_development_dependency("rspec", '>= 1.3.0')

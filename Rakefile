@@ -67,9 +67,9 @@ end
 #
 # You can generte the doc by hand as follows:
 #
-#   rdoc -U --main=README --title='Jnlp::Jnlp' README History.txt License.txt lib
+#   rdoc -U --main=README.rdoc --title='Jnlp::Jnlp' README.rdoc History.txt License.txt lib
 #
-#   yardoc -o ydoc - README History.txt License.txt
+#   yardoc -o ydoc - README.rdoc History.txt License.txt
 
 begin
   # try using the rdoc gem if it is installed
@@ -77,9 +77,9 @@ begin
   RDoc::Task.new do |rdoc|
     rdoc.rdoc_dir = 'doc'
     rdoc.template = "darkfish"
-    rdoc.main = "README"
+    rdoc.main = "README.rdoc"
     rdoc.title = 'Jnlp::Jnlp'
-    rdoc.rdoc_files.include("README", 'History.txt', 'License.txt', "lib/**/*.rb")
+    rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
     rdoc.options += ['-f', 'darkfish']
   end
 rescue LoadError
@@ -87,9 +87,9 @@ rescue LoadError
   require 'rake/rdoctask'
   Rake::RDocTask.new do |rdoc|
     rdoc.rdoc_dir = 'doc'
-    rdoc.main = "README"
+    rdoc.main = "README.rdoc"
     rdoc.title = 'Jnlp::Jnlp'
-    rdoc.rdoc_files.include("README", 'History.txt', 'License.txt', "lib/**/*.rb")
+    rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
   end
 end
 
@@ -105,20 +105,11 @@ end
 begin
   require 'yard'
   YARD::Rake::YardocTask.new do |ydoc|
-    ydoc.files   = ["README", 'History.txt', 'License.txt', "lib/**/*.rb"]
-    ydoc.options = ['-o', 'ydoc', '--main', 'README']
+    ydoc.files   = ["README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb"]
+    ydoc.options = ['-o', 'ydoc', '--main', 'README.rdoc']
   end
 rescue LoadError
   task :yardoc do
     abort "YARD is not available. In order to run yardoc: sudo gem install yard"
   end
 end
-  
-# Rake::RDocTask.new do |rdoc|
-#   rdoc.rdoc_dir = 'doc'
-#   rdoc.template = "darkfish"
-#   rdoc.main = "README"
-#   rdoc.rdoc_files.include("README", 'History.txt', 'License.txt', "lib/**/*.rb")
-#   rdoc.options += ['-f', 'darkfish']
-# end
-
