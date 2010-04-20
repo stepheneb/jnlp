@@ -1,3 +1,13 @@
+== 0.0.5.5 2010-04-19
+
+Removed use of the development dependency on hoe. Much simpler to 
+just check-in and manage the gemspec file itself.
+See: http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended/
+
+Updates to the README
+
+new specs for new behaviors
+
 == 0.0.5.4 2010-02-11
 
 addition optional parameter: arch for Jnlp::Jnlp instance methods:
