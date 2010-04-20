@@ -1,9 +1,3 @@
-# :main: Jnlp::Jnlp
-# :title: Jnlp::Jnlp RDoc
-#
-# to regenerate and display this rdoc: 
-#   rdoc -U -SN jnlp.rb otrunk.rb maven_jnlp.rb; open doc/index.html
-#
 require 'rubygems'
 require 'open-uri'
 require 'hpricot'
