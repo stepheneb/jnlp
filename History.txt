@@ -1,3 +1,7 @@
+== 0.6.1 2010-05-17
+
+Clear up new version numbering.
+
 == 0.6.0 2010-05-17
 
 Added ability to limit the number of families parsed when creating a Jnlp::MavenJnlp.
