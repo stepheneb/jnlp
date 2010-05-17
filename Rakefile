@@ -46,7 +46,7 @@ end
 
 desc "push the packaged gem: jnlp-#{Jnlp::VERSION}.gem to rubygems.org"
 task :release => :package do
-  system "gem push jnlp-#{Jnlp::VERSION}"
+  system "gem push jnlp-#{Jnlp::VERSION}.gem"
 end
 
 namespace :hudson do
