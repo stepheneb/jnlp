@@ -1,5 +1,5 @@
 module Jnlp #:nodoc:
-  VERSION = '0.0.5.4'
+  VERSION = '0.6.0'
   #
   # Let's see if this patch:
   #

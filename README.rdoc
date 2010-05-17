@@ -23,6 +23,70 @@ Once the Jnlp::Jnlp object is created you can call Jnlp::Jnlp#cache_resources to
 
 The structure of the cache directory and the naming using for the jar and nativelib files is the same as that used by the Java Web Start Download Servlet, see Sun's servelet guide[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/downloadservletguide.html].
 
+== Creating MavenJnlp objects that represent the resources deployed by a maven jnlp servlet.
+
+=== Creating a MavenJnlp object that represents the all the resources deployed by a maven jnlp servlet.
+
+  require 'jnlp'
+  mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/')
+
+This takes about 90s on a 3Mbps connection processing Concord's
+Maven Jnlp Web Start server.
+
+You can now do this:
+
+  mj.maven_jnlp_families.length                        # => 26
+  mj.maven_jnlp_families[0].name                       # => "all-otrunk-snapshot"
+  mj.maven_jnlp_families[0].versions.length            # => 1568
+  mj.maven_jnlp_families[0].versions.first.version     # => "0.1.0-20070420.131610"
+  mj.maven_jnlp_families[0].snapshot_version           # => "0.1.0-20090327.222627"
+
+  mj.maven_jnlp_families[0].versions.last.url
+
+  # => "/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20090327.222627.jnlp"
+ 
+  mj.maven_jnlp_families[0].snapshot.url
+
+  # => "/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20090327.222627.jnlp"
+
+  mj.maven_jnlp_families[0].versions.first.url
+
+  # => "/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20070420.131610.jnlp"
+
+=== Creating MavenJnlp objects that represent some all the resources deployed by a maven jnlp servlet.
+
+You can pass in an options hash to limit the number of maven jnlp families parsed:
+
+Example: passing in an optional array of maven jnlp families
+This will get all versions of each family.
+
+  mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/', 
+       { :families => ['all-otrunk-snapshot', 'gui-testing'] })
+
+  mj.maven_jnlp_families.length
+  => 2
+
+Example: passing in an optional hash of maven jnlp families
+This will get all versions of each family.
+
+  mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/', 
+       { :families => { 'all-otrunk-snapshot' => nil, 'gui-testing' => nil } })
+
+  mj.maven_jnlp_families.length
+  => 2
+
+Example: passing in an optional hash of maven jnlp families and specifying
+the versions of the jnlp urls to get for one family.
+
+  mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/',
+       { :families => { 
+         'all-otrunk-snapshot' => { :versions => ['0.1.0-20100513.161426', '0.1.0-20100513.154925'] },
+         'gui-testing' => nil }
+       })
+  mjfs = mj.maven_jnlp_families
+  [mjfs.length, mjfs[0].versions.length, mjfs[1].versions.length]
+  => [2, 2, 50]
+
 == Building the gem
 
 === The source code
@@ -62,5 +126,9 @@ MRI:
 Generating JUnit XML for integrating with the Hudson CIS server:
 
   rake hudson:spec
+
+=== TODO
+
+Add tests for the MavenJnlp features.
 
 === Packaging and installing

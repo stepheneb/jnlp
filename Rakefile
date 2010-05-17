@@ -41,7 +41,7 @@ end
 
 desc "generate the gem package: jnlp-#{Jnlp::VERSION}.gem"
 task :package do
-  system "gem build ../jnlp.gemspec"
+  system "gem build jnlp.gemspec"
 end
 
 desc "push the packaged gem: jnlp-#{Jnlp::VERSION}.gem to rubygems.org"
