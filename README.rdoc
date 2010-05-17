@@ -3,7 +3,7 @@
 A gem for encapsulating the content and resources referenced by Java Web Start jnlps
 and interacting with jnlp repositories managed by the maven-jnlp Eclipse plugin.
 
-Complete rdoc available here: Jnlp::Jnlp
+Complete rdoc available here: http://rdoc.info/projects/stepheneb/jnlp
 
 For more information about the structure of Java Web Start see Sun's documentation[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html]
 
@@ -21,7 +21,7 @@ To create a new Jnlp::Jnlp call Jnlp::Jnlp#new with a string that contains eithe
 
 Once the Jnlp::Jnlp object is created you can call Jnlp::Jnlp#cache_resources to create a local cache of all the jar and nativelib resources. 
 
-The structure of the cache directory and the naming using for the jar and nativelib files is the same as that used by the Java Web Start Download Servlet, see Sun's servelet guide[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/downloadservletguide.html].
+The structure of the cache directory and the naming using for the jar and nativelib files is the same as that used by the Java Web Start Download Servlet, see Sun's servlet guide[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/downloadservletguide.html].
 
 == Creating MavenJnlp objects that represent the resources deployed by a maven jnlp servlet.
 
@@ -108,8 +108,8 @@ The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/t
 
   $ rake -T
   rake spec         # run spec tests (the default task)
-  rake package      # generate the gem package: jnlp-0.0.5.4.gem
-  rake release      # push the packaged gem: jnlp-0.0.5.4.gem to rubygems.org
+  rake package      # generate the gem package: jnlp-<version>.gem
+  rake release      # push the packaged gem: jnlp-<version>.gem to rubygems.org
   rake hudson:spec  # run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)
   rake rdoc         # generate the rdoc documentation in doc/
   
