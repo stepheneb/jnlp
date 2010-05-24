@@ -1,3 +1,21 @@
+== 0.6.2 2010-05-24
+
+Much better support for replicating a maven_jnlp-style directory structure
+with jars, jnlps, and snapshot information.
+
+Example:
+
+  server = 'http://localhost:4321'
+  jnlp_cache = 'jnlp'
+  new_href = "#{server}#{jnlp.path}"
+  jnlp.write_jnlp( { :dir => jnlp_cache, :jnlp => { :codebase => server, :href => new_href }, :snapshot => true } )
+
+Writes a duplicate of the remote jnlp to a local path rooted at 'jnlp/'.
+With the codebase and href re-written referencing: 'http://localhost:4321'
+
+In addition a duplicate of the versioned jnlp is written without the version string as a snapshot
+jnlp and the file: <jnlp-name>-CURRENT_VERSION.txt containing the version string is written.
+
 == 0.6.1 2010-05-17
 
 Clear up new version numbering.

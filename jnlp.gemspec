@@ -24,4 +24,13 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('hpricot', "= 0.6.164")  
   s.add_development_dependency("rspec", '>= 1.3.0')
   s.add_development_dependency("ci_reporter", '>= 1.6.0')
+  
+  s.post_install_message = <<-POST_INSTALL_MESSAGE
+
+  Thanks for installing: jnlp-#{Jnlp::VERSION}
+
+  Documentation: http://rdoc.info/projects/stepheneb/jnlp
+  Repository:    http://github.com/stepheneb/jnlp
+
+  POST_INSTALL_MESSAGE
 end

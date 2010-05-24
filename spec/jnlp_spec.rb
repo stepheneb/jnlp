@@ -48,8 +48,8 @@ describe Jnlp do
     @first_jnlp.href.should == 'http://jnlp.concord.org/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20091221.214313.jnlp'
   end
 
-  it "should have an path attribute with the value #{@first_jnlp_path}" do
-    @first_jnlp.path.should == @first_jnlp_path
+  it "should have a url attribute with the value #{@first_jnlp_path}" do
+    @first_jnlp.url.should == @first_jnlp_path
   end
 
   it "should have an max_heap_size attribute with the value '128m'" do
