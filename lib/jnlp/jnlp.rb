@@ -554,6 +554,17 @@ module Jnlp #:nodoc:
       unless file_exists && @signature_verified
         FileUtils.mkdir_p(File.dirname(destination))
         jarfile = open(source)
+        puts "reading:     #{source}" if options[:verbose]
+        tried_to_read = 0
+        begin
+          jarfile = open(source)
+        rescue OpenURI::HTTPError => e
+          puts e
+          if tried_to_read < 1
+            tried_to_read += 1
+            retry
+          end
+        end
         if jarfile.class == Tempfile
           FileUtils.cp(jarfile.path, destination)
         else
