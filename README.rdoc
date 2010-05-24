@@ -17,7 +17,7 @@ To create a new Jnlp::Jnlp call Jnlp::Jnlp#new with a string that contains eithe
 
 === Creating a new Jnlp::Jnlp object from a Java Web Start jnlp referenced with a url. 
 
-  j = Jnlp::Jnlp.new("jnlp.concord.org/dev/org/concord/maven-jnlp/otrunk-sensor/otrunk-sensor.jnlp")
+  j = Jnlp::Jnlp.new("http://jnlp.concord.org/dev/org/concord/maven-jnlp/otrunk-sensor/otrunk-sensor.jnlp")
 
 Once the Jnlp::Jnlp object is created you can call Jnlp::Jnlp#cache_resources to create a local cache of all the jar and nativelib resources. 
 
@@ -107,11 +107,13 @@ The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/t
 === rake tasks
 
   $ rake -T
-  rake spec         # run spec tests (the default task)
-  rake package      # generate the gem package: jnlp-<version>.gem
-  rake release      # push the packaged gem: jnlp-<version>.gem to rubygems.org
-  rake hudson:spec  # run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)
-  rake rdoc         # generate the rdoc documentation in doc/
+  rake clobber_rdoc  # Remove RDoc HTML files
+  rake hudson:spec   # run the spec tests and generate JUnit XML reports (for...
+  rake package       # generate the gem package: jnlp-0.6.1.gem
+  rake rdoc          # Build RDoc HTML files
+  rake release       # push the packaged gem: jnlp-0.6.1.gem to rubygems.org
+  rake rerdoc        # Rebuild RDoc HTML files
+  rake spec          # run spec tests (the default task)
   
 === Running the tests
 
@@ -123,12 +125,18 @@ MRI:
 
   rake spec
 
-Generating JUnit XML for integrating with the Hudson CIS server:
+Generating JUnit XML output for integrating with the Hudson CIS server:
 
   rake hudson:spec
 
+=== Building and installing the gem locally
+
+  rake package
+  gem install jnlp-<version>.gem
+
 === TODO
 
-Add tests for the MavenJnlp features.
-
-=== Packaging and installing
+Add tests for:
+* MavenJnlp features.
+* downloading and caching jars
+* re-generating original and local jnlps
