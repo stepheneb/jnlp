@@ -578,7 +578,7 @@ module Jnlp #:nodoc:
       end
     end
     #
-    # Verifys signature of locallly cached resource
+    # Verifies signature of locallly cached resource
     #
     # Returns boolean value indicating whether the signature of the
     # cached local copy of the resource verified successfully
@@ -931,7 +931,10 @@ module Jnlp #:nodoc:
     # Create a new Jnlp by loading and parsing the Java Web Start
     # Jnlp located at url -- url can be a local path or a url.
     # * if you include _cache_dir_ then the jnlp resources will be cached locally when the object is created
-    # * If you also include a boolean true the pack_gzip versions of the resources will be cached also.
+    # You can pass a hash with these options:
+    #
+    #    :include_pack_gz => true    download and cache the pack.gz jar files also
+    #    :verbose => true            display a log
     #
     def initialize(url=nil, cache_dir=nil, options={})
       @url = url
@@ -1193,9 +1196,6 @@ module Jnlp #:nodoc:
     #
     # returns the jnlp as a string
     #
-    # <jnlp spec="1.0+" codebase="http://localhost:4321" href="http://localhost:4321/org/concord/maven-jnlp/sensor-applets/sensor-applets-0.1.0-20100521.210440.jnlp"> 
-    #
-    #
     def to_jnlp(options={})
       jnlp = @jnlp.to_s
       unless options.empty?
@@ -1228,9 +1228,10 @@ module Jnlp #:nodoc:
     # With the codebase and href re-written referencing: 'http://localhost:4321'
     #
     # In addition a duplicate of the versioned jnlp is written without the version string as a snapshot
-    # jnlp and the file: <jnlp-name>-CURRENT_VERSION.txt containing the version string is written.
+    # jnlp and the version string is written to this file:
     #
-    #   
+    #   jnlp-name-CURRENT_VERSION.txt 
+    #
     def write_jnlp(options={})
       dir = options[:dir] || '.'
       path = options[:path] || @path.gsub(/^\//, '')
