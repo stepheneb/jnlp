@@ -1,6 +1,6 @@
 require 'rubygems'
 
-JRUBY = defined? RUBY_ENGINE && RUBY_ENGINE == 'jruby'
+JRUBY = (defined? RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
 
 def gem_install_command_strings(missing_gems)
   command = JRUBY ? "  jruby -S gem install " : "  sudo gem install "
