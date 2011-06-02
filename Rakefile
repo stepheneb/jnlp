@@ -39,9 +39,9 @@ Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList["spec/**/*_spec.rb"]
 end
 
-desc "generate the gem package: jnlp-#{Jnlp::VERSION}.gem"
+desc "generate the gem package: pkg/jnlp-#{Jnlp::VERSION}.gem"
 task :package do
-  system "gem build jnlp.gemspec"
+  system "gem build jnlp.gemspec && mkdir -p pkg && mv jnlp-#{Jnlp::VERSION}.gem pkg/"
 end
 
 desc "push the packaged gem: jnlp-#{Jnlp::VERSION}.gem to rubygems.org"
