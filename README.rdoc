@@ -2,7 +2,7 @@
 # @title README
 # @author Stephen Bannasch
 
-== Jnlp Ruby Gem version 0.7.0
+== Jnlp Ruby Gem version 0.7.1
 
 A Ruby gem for encapsulating the content and resources referenced by Java Web Start jnlps
 and interacting with jnlp repositories managed by the maven-jnlp Eclipse plugin.
