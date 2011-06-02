@@ -3,7 +3,7 @@ require 'rubygems'
 JRUBY = (defined? RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
 
 def gem_install_command_strings(missing_gems)
-  command = JRUBY ? "  jruby -S gem install " : "  sudo gem install "
+  command = JRUBY ? "  jruby -S gem install " : "  gem install "
   command + missing_gems.collect {|g| "#{g[0]} -v '#{g[1]}'"}.join(' ') + "\n"
 end
 
