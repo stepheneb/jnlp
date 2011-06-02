@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage = 'http://rubywebstart.rubyforge.org/jnlp/rdoc'
   s.summary = %q{Ruby tools for working with Java Web Start JNLPs.}
   s.description = %q{For manipulation of Java Web Start Jnlps and the resources they reference.}
-  s.date = '2010-02-11'
+  s.date = '2011-06-02'
   s.rubyforge_project = 'rubywebstart'
 
   s.rdoc_options = ["--main", "README.rdoc"]
