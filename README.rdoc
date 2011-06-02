@@ -147,6 +147,11 @@ Run an adhoc test in the file sample.rb in the same top-level directory as this 
   rake package
   gem install pkg/jnlp-<version>.gem
 
+=== Releasing a new version to http://rubygems.org/
+
+  rake package
+  gem push pkg/jnlp-<version>.gem
+
 === TODO
 
 Add tests for:
