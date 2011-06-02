@@ -16,18 +16,18 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README.rdoc"]
   s.extra_rdoc_files = %w{ History.txt License.txt README.rdoc}
   
-  s.required_rubygems_version = ">= 1.3.2"
+  s.required_rubygems_version = ">= 1.3.5"
   s.require_path = 'lib'
 
   s.files =  Dir.glob("{lib,spec}/**/*.{rb}") + %w{ History.txt License.txt README.rdoc Rakefile jnlp.gemspec }
 
-  s.add_runtime_dependency('hpricot', "= 0.6.164")  
-  s.add_development_dependency("rspec", '>= 1.3.0')
+  s.add_runtime_dependency('nokogiri', "~> 1.4.4")  
+  s.add_development_dependency("rspec", '~> 2.5.0')
   s.add_development_dependency("ci_reporter", '>= 1.6.0')
   
   s.post_install_message = <<-POST_INSTALL_MESSAGE
 
-  Thanks for installing: jnlp-#{Jnlp::VERSION}
+  Thanks for installing: jnlp-#{s.version}
 
   Documentation: http://rdoc.info/projects/stepheneb/jnlp
   Repository:    http://github.com/stepheneb/jnlp

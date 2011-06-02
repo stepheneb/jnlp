@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'hpricot'
+require 'nokogiri'
 
 module Jnlp #:nodoc:
   # 
@@ -142,7 +142,7 @@ module Jnlp #:nodoc:
       @url = @base_url + @path
       @name = File.basename(@path)
       @versions = []
-      doc = Hpricot(open(@url))
+      doc = Nokogiri::HTML(open(@url))
       anchor_tags = doc.search("//a")
       snapshot_version_path = anchor_tags.find {|a| a['href'][/CURRENT_VERSION\.txt$/] }['href']
       @snapshot_version = open(base_url + snapshot_version_path).read
@@ -284,7 +284,7 @@ module Jnlp #:nodoc:
       @jnlp_families_path = jnlp_families_path
       @jnlp_families_url = @base_url + @jnlp_families_path
       @maven_jnlp_families = []
-      doc = Hpricot(open(@jnlp_families_url))
+      doc = Nokogiri::HTML(open(@jnlp_families_url))
       family_paths = doc.search("//a").find_all { |a| 
         a['href'][/#{@jnlp_families_path}/] 
       }.collect { |a| a['href'] }

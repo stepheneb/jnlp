@@ -1,6 +1,3 @@
-require 'rubygems'
-gem 'rspec'
-require 'spec'
 require File.join(File.dirname(__FILE__), '..', 'lib', 'jnlp')
 
 def file_fixture(filename)

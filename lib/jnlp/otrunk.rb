@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'hpricot'
+require 'nokogiri'
 require 'fileutils'
 require 'net/http'
 require 'date'

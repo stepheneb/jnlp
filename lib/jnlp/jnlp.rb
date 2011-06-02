@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'open-uri'
-require 'hpricot'
+require 'nokogiri'
 require 'fileutils'
 require 'net/http'
 require 'date'
@@ -206,9 +206,9 @@ module Jnlp #:nodoc:
     #
     def initialize(icon)
       @icon = icon
-      @href = icon.attr('href')
-      @height = icon.attr('height').to_i
-      @width = icon.attr('width').to_i
+      @href = icon.attr('href').value
+      @height = icon.attr('height').value.to_i
+      @width = icon.attr('width').value.to_i
     end
   end
   #
@@ -1007,23 +1007,23 @@ module Jnlp #:nodoc:
       # 
       @local_jnlp_name = "local-#{@name}"
       @local_jnlp_href = File.expand_path("#{Dir.pwd}/#{@local_jnlp_name}")    
-      @jnlp = Hpricot.XML(open(url))
-      @spec = (@jnlp/"jnlp").attr('spec')
-      @codebase = (@jnlp/"jnlp").attr('codebase')
+      @jnlp = Nokogiri::XML(open(url))
+      @spec = (@jnlp/"jnlp").attr('spec').value
+      @codebase = (@jnlp/"jnlp").attr('codebase').value
       @path = @url.gsub(@codebase, '')
       @family = File.basename(File.dirname(@path))
-      @href = (@jnlp/"jnlp").attr('href')
+      @href = (@jnlp/"jnlp").attr('href').value
       @title, @vendor, @homepage, @description, @icon = nil, nil, nil, nil, nil
       unless (info = (@jnlp/"information")).empty?
         @title = (info/"title").inner_html.strip
         @vendor = (info/"vendor").inner_html.strip
-        @homepage = (info/"homepage").empty? ? '' : (info/"homepage").attr('href')
+        @homepage = (info/"homepage").empty? ? '' : (info/"homepage").attr('href').value
         @description = (info/"description").empty? ? '' : (info/"description").inner_html.strip
         icon = (info/"icon")
         @icon = Icon.new(icon) unless icon.empty?
         @offline_allowed = (info/"offline-allowed") ? true : false
       end
-      @main_class = (@jnlp/"application-desc").attr('main-class')
+      @main_class = (@jnlp/"application-desc").attr('main-class').value
       @argument = (@jnlp/"argument").inner_html.strip
       @j2ses, @properties, @jars, @nativelibs = [], [], [], []
       (@jnlp/"resources").each do |resources|
@@ -1080,7 +1080,7 @@ module Jnlp #:nodoc:
       # get a copy of the existing jnlp 
       # (it should be easier than this)
       #
-      @local_jnlp = Hpricot.XML(@jnlp.to_s)
+      @local_jnlp = Nokogiri::XML(@jnlp.to_s)
       #
       # we'll be working with the Hpricot root element
       #

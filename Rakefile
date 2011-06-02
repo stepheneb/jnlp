@@ -3,11 +3,15 @@ require 'rubygems'
 JRUBY = (defined? RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
 
 def gem_install_command_strings(missing_gems)
-  command = JRUBY ? "  jruby -S gem install " : "  gem install "
-  command + missing_gems.collect {|g| "#{g[0]} -v '#{g[1]}'"}.join(' ') + "\n"
+  command = JRUBY ? "jruby -S gem install" : "gem install"
+  install_str = ''
+  missing_gems.each do |g|
+    install_str << "  #{command} #{g[0]} -v #{g[1]}\n"
+  end
+  install_str
 end
 
-@development_gems = [['hpricot', '= 0.6.164'], ['rspec', '>= 1.3.0'], ['ci_reporter', '>= 1.6.0']]
+@development_gems = [['nokogiri', "~> 1.4.4"], ['rspec', '~> 2.5.0'], ['ci_reporter', '>= 1.6.0']]
 @missing_gems = []
 @development_gems.each do |gem_name_and_version|
   begin
@@ -22,21 +26,20 @@ unless @missing_gems.empty?
 
 The following gem(s) need to be installed to run, test and package the jnlp gem.
 
-  #{gem_install_command_strings(@missing_gems.reverse)}
-
+#{gem_install_command_strings(@missing_gems.reverse)}
   HEREDOC
   raise message
 end
 
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 require File.join(File.expand_path(File.dirname(__FILE__)), 'lib', 'jnlp.rb')
 
 task :default => :spec
 
 desc 'run spec tests (the default task)'
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList["spec/**/*_spec.rb"]
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = FileList["spec/**/*_spec.rb"]
 end
 
 desc "generate the gem package: pkg/jnlp-#{Jnlp::VERSION}.gem"
@@ -50,6 +53,7 @@ task :release => :package do
 end
 
 namespace :hudson do
+  require 'ci/reporter/rake/rspec'
   desc "run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)"
   task :spec => ["hudson:setup:rspec", 'rake:spec']
 
@@ -71,36 +75,40 @@ end
 #
 #   yardoc -o ydoc - README.rdoc History.txt License.txt
 
-begin
-  # try using the rdoc gem if it is installed
-  require 'rdoc/task'
-  RDoc::Task.new do |rdoc|
-    rdoc.rdoc_dir = 'doc'
-    rdoc.template = "darkfish"
-    rdoc.main = "README.rdoc"
-    rdoc.title = 'Jnlp::Jnlp'
-    rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
-    rdoc.options += ['-f', 'darkfish']
+namespace :doc do
+  begin
+    # try using the rdoc gem if it is installed
+    gem 'rdoc', '~> 3.6.1'
+    require 'rdoc/task'
+    RDoc::Task.new do |rdoc|
+      rdoc.rdoc_dir = 'doc'
+      rdoc.template = "darkfish"
+      rdoc.main = "README.rdoc"
+      rdoc.title = 'Jnlp::Jnlp'
+      rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
+      rdoc.options += ['-f', 'darkfish']
+    end
+  rescue LoadError
+    # else use Rake's rdoc task (but this won't use the darkfish template)
+    require 'rake/rdoctask'
+    Rake::RDocTask.new do |rdoc|
+      rdoc.rdoc_dir = 'doc'
+      rdoc.main = "README.rdoc"
+      rdoc.title = 'Jnlp::Jnlp'
+      rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
+    end
   end
-rescue LoadError
-  # else use Rake's rdoc task (but this won't use the darkfish template)
-  require 'rake/rdoctask'
-  Rake::RDocTask.new do |rdoc|
-    rdoc.rdoc_dir = 'doc'
-    rdoc.main = "README.rdoc"
-    rdoc.title = 'Jnlp::Jnlp'
-    rdoc.rdoc_files.include("README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb")
-  end
-end
 
-begin
-  require 'yard'
-  YARD::Rake::YardocTask.new do |ydoc|
-    ydoc.files   = ["README.rdoc", 'History.txt', 'License.txt', "lib/**/*.rb"]
-    ydoc.options = ['-o', 'ydoc', '--main', 'README.rdoc']
-  end
-rescue LoadError
-  task :yardoc do
-    abort "YARD is not available. In order to run yardoc: sudo gem install yard"
+  begin
+    require 'yard'
+    require 'yard/rake/yardoc_task'
+    YARD::Rake::YardocTask.new do |ydoc|
+      ydoc.files   = ["lib/**/*.rb", "-", "README.rdoc", 'History.txt', 'License.txt']
+      ydoc.options = ['-o', 'ydoc', '--main', 'README.rdoc']
+    end
+  rescue LoadError
+    task :yardoc do
+      abort "YARD is not available. In order to run yardoc: sudo gem install yard"
+    end
   end
 end

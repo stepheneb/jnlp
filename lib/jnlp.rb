@@ -3,7 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'rubygems'
 
-gem 'hpricot', '=0.6.164'
+gem 'nokogiri', '~> 1.4.0'
 
 module Jnlp
   require 'jnlp/jnlp.rb'

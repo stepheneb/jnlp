@@ -1,31 +1,35 @@
-= Jnlp:Jnlp
+# @markup rdoc
+# @title README
+# @author Stephen Bannasch
 
-A gem for encapsulating the content and resources referenced by Java Web Start jnlps
+== Jnlp Ruby Gem version 0.7.0
+
+A Ruby gem for encapsulating the content and resources referenced by Java Web Start jnlps
 and interacting with jnlp repositories managed by the maven-jnlp Eclipse plugin.
 
 Complete rdoc available here: http://rdoc.info/projects/stepheneb/jnlp
 
-For more information about the structure of Java Web Start see Sun's documentation[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html]
+{file:history.html Release History}
 
-To create a new Jnlp::Jnlp call Jnlp::Jnlp#new with a string that contains either a local path or a url.
+For more information about the structure of Java Web Start see Sun's documentation[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html]
 
 == Examples:
 
-=== Creating a new Jnlp::Jnlp object from a local Java Web Start jnlp file. 
+=== Creating a new {Jnlp::Jnlp} object from a local Java Web Start jnlp file. 
 
   j = Jnlp::Jnlp.new("authoring.jnlp")
 
-=== Creating a new Jnlp::Jnlp object from a Java Web Start jnlp referenced with a url. 
+=== Creating a new {Jnlp::Jnlp} object from a Java Web Start jnlp referenced with a url. 
 
   j = Jnlp::Jnlp.new("http://jnlp.concord.org/dev/org/concord/maven-jnlp/otrunk-sensor/otrunk-sensor.jnlp")
 
-Once the Jnlp::Jnlp object is created you can call Jnlp::Jnlp#cache_resources to create a local cache of all the jar and nativelib resources. 
+Once the {Jnlp::Jnlp} object is created you can call {Jnlp::Jnlp#cache_resources} to create a local cache of all the jar and nativelib resources. 
 
 The structure of the cache directory and the naming using for the jar and nativelib files is the same as that used by the Java Web Start Download Servlet, see Sun's servlet guide[http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/downloadservletguide.html].
 
-== Creating MavenJnlp objects that represent the resources deployed by a maven jnlp servlet.
+== Creating {Jnlp::MavenJnlp} objects that represent the resources deployed by a maven jnlp servlet.
 
-=== Creating a MavenJnlp object that represents the all the resources deployed by a maven jnlp servlet.
+=== Creating a {Jnlp::MavenJnlp} object that represents the all the resources deployed by a maven jnlp servlet.
 
   require 'jnlp'
   mj = Jnlp::MavenJnlp.new('http://jnlp.concord.org', '/dev/org/concord/maven-jnlp/')
@@ -53,7 +57,7 @@ You can now do this:
 
   # => "/dev/org/concord/maven-jnlp/all-otrunk-snapshot/all-otrunk-snapshot-0.1.0-20070420.131610.jnlp"
 
-=== Creating MavenJnlp objects that represent some all the resources deployed by a maven jnlp servlet.
+=== Creating {Jnlp::MavenJnlp} objects that represent some all the resources deployed by a maven jnlp servlet.
 
 You can pass in an options hash to limit the number of maven jnlp families parsed:
 
@@ -64,7 +68,8 @@ This will get all versions of each family.
        { :families => ['all-otrunk-snapshot', 'gui-testing'] })
 
   mj.maven_jnlp_families.length
-  => 2
+
+  # => 2
 
 Example: passing in an optional hash of maven jnlp families
 This will get all versions of each family.
@@ -73,7 +78,8 @@ This will get all versions of each family.
        { :families => { 'all-otrunk-snapshot' => nil, 'gui-testing' => nil } })
 
   mj.maven_jnlp_families.length
-  => 2
+
+  # => 2
 
 Example: passing in an optional hash of maven jnlp families and specifying
 the versions of the jnlp urls to get for one family.
@@ -85,7 +91,8 @@ the versions of the jnlp urls to get for one family.
        })
   mjfs = mj.maven_jnlp_families
   [mjfs.length, mjfs[0].versions.length, mjfs[1].versions.length]
-  => [2, 2, 50]
+
+  # => [2, 2, 50]
 
 == Building the gem
 
@@ -97,23 +104,24 @@ The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/t
 
 === Runtime dependencies
 
-  hpricot '= 0.6.164'
+  nokogiri '~> 1.4.0'
 
 === Development dependencies
 
-  rspec -v'>= 1.3.0'
-  ci_reporter -v'>= 1.6.0'
+  rspec        '~> 2.5.0'
+  ci_reporter  '~> 1.6.4'
 
 === rake tasks
 
   $ rake -T
-  rake clobber_rdoc  # Remove RDoc HTML files
-  rake hudson:spec   # run the spec tests and generate JUnit XML reports (for...
-  rake package       # generate the gem package: jnlp-0.6.1.gem
-  rake rdoc          # Build RDoc HTML files
-  rake release       # push the packaged gem: jnlp-0.6.1.gem to rubygems.org
-  rake rerdoc        # Rebuild RDoc HTML files
-  rake spec          # run spec tests (the default task)
+  rake doc:clobber_rdoc  # Remove RDoc HTML files
+  rake doc:rdoc          # Build RDoc HTML files
+  rake doc:rerdoc        # Rebuild RDoc HTML files
+  rake doc:yard          # Generate YARD Documentation
+  rake hudson:spec       # run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)
+  rake package           # generate the gem package: pkg/jnlp-0.7.0.gem
+  rake release           # push the packaged gem: jnlp-0.7.0.gem to rubygems.org
+  rake spec              # run spec tests (the default task)
   
 === Running the tests
 
@@ -129,10 +137,15 @@ Generating JUnit XML output for integrating with the Hudson CIS server:
 
   rake hudson:spec
 
+=== Running adhoc tests using the source code directly
+
+Run an adhoc test in the file sample.rb in the same top-level directory as this source code by telling ruby to first add 'lib/' to the load path.
+  ruby -Ilib sample.rb
+
 === Building and installing the gem locally
 
   rake package
-  gem install jnlp-<version>.gem
+  gem install pkg/jnlp-<version>.gem
 
 === TODO
 

@@ -10,7 +10,7 @@ require 'nokogiri'
 OTRUNK_EXAMPLES = '/Users/stephen/dev/concord/concord-projects-common.svn.git/java/otrunk/otrunk-examples'
 @otml_classes = []
 Dir["#{OTRUNK_EXAMPLES}/**/*.otml"].each do |f| 
-  doc = Hpricot.XML(open(f))
+  doc = Nokogiri::XML(open(f))
   @otml_classes << doc.search("//import").collect {|i| i['class']}
 end
 @otml_classes.flatten!.uniq!
