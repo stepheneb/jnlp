@@ -6,7 +6,7 @@ def gem_install_command_strings(missing_gems)
   command = JRUBY ? "jruby -S gem install" : "gem install"
   install_str = ''
   missing_gems.each do |g|
-    install_str << "  #{command} #{g[0]} -v #{g[1]}\n"
+    install_str << "  #{command} #{g[0]} -v ''#{g[1]}'\n"
   end
   install_str
 end
