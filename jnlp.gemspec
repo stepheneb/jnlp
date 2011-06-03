@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = 'rubywebstart'
 
   s.rdoc_options = ["--main", "README.rdoc"]
-  s.extra_rdoc_files(%w{ README.rdoc History.txt License.txt })
+  s.extra_rdoc_files = %w{ README.rdoc History.txt License.txt }
   
   s.required_rubygems_version = ">= 1.3.5"
   s.require_path = 'lib'

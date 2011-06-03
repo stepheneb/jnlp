@@ -1007,7 +1007,7 @@ module Jnlp #:nodoc:
       # 
       @local_jnlp_name = "local-#{@name}"
       @local_jnlp_href = File.expand_path("#{Dir.pwd}/#{@local_jnlp_name}")    
-      @jnlp = Nokogiri::XML(open(url))
+      @jnlp = Nokogiri::XML(open(url).read)
       @spec = (@jnlp/"jnlp").attr('spec').value
       @codebase = (@jnlp/"jnlp").attr('codebase').value
       @path = @url.gsub(@codebase, '')
