@@ -1,3 +1,7 @@
+== 0.7.3 2011-08-28
+
+Extend support for Nokogiri to include 1.5.x series
+
 == 0.7.2 2011-06-03
 
 Work-around strange Nokopgiri bug on Linux when creating a new doc from a TempFile

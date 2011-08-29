@@ -11,7 +11,7 @@ def gem_install_command_strings(missing_gems)
   install_str
 end
 
-@development_gems = [['nokogiri', "~> 1.4.4"], ['rspec', '~> 2.5.0'], ['ci_reporter', '>= 1.6.0']]
+@development_gems = [['nokogiri', ">= 1.4.4"], ['rspec', '~> 2.6'], ['ci_reporter', '~> 1.6']]
 @missing_gems = []
 @development_gems.each do |gem_name_and_version|
   begin
