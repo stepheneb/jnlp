@@ -98,31 +98,40 @@ the versions of the jnlp urls to get for one family.
 
 === The source code
 
-The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/tree/master].
+The source code for the jnlp gem is on github[http://github.com/stepheneb/jnlp/tree/master] and the gem dependencies are managed with [bundler](http://gembundler.com/)
 
   git clone git://github.com/stepheneb/jnlp.git
+  cd jnlp
+  gem install nokogiri
+  bundle install
+
+Bundler should install nokogiri but can't because of this bug: {can't find gem specified in gemspec with a range}[https://github.com/carlhuda/bundler/issues/1397]
 
 === Runtime dependencies
 
-  nokogiri '~> 1.4.0'
+  nokogiri    ">= 1.4.4", "<= 1.5"
 
 === Development dependencies
 
+  rake
   rspec        '~> 2.5.0'
   ci_reporter  '~> 1.6.4'
+  rdoc         '~> 3.9.4'
+  yard         '~> 0.7.2'
 
 === rake tasks
 
-  $ rake -T
-  rake doc:clobber_rdoc  # Remove RDoc HTML files
-  rake doc:rdoc          # Build RDoc HTML files
-  rake doc:rerdoc        # Rebuild RDoc HTML files
-  rake doc:yard          # Generate YARD Documentation
-  rake hudson:spec       # run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)
-  rake package           # generate the gem package: pkg/jnlp-0.7.0.gem
-  rake release           # push the packaged gem: jnlp-0.7.0.gem to rubygems.org
-  rake spec              # run spec tests (the default task)
-  
+  $ bundle exec rake -T
+  rake build         # Build jnlp-0.7.3.gem into the pkg directory
+  rake clobber_rdoc  # Remove RDoc HTML files
+  rake hudson:spec   # run the spec tests and generate JUnit XML reports (for integrating with a Hudson CIS server)
+  rake install       # Build and install jnlp-0.7.3.gem into system gems
+  rake rdoc          # Build RDoc HTML files
+  rake release       # Create tag v0.7.3 and build and push jnlp-0.7.3.gem to Rubygems
+  rake rerdoc        # Rebuild RDoc HTML files
+  rake spec          # Run RSpec
+  rake yard          # Generate YARD Documentation
+
 === Running the tests
 
 JRuby:
@@ -131,11 +140,11 @@ JRuby:
 
 MRI:
 
-  rake spec
+  bundle exec rake spec
 
 Generating JUnit XML output for integrating with the Hudson CIS server:
 
-  rake hudson:spec
+  bundle exec rake hudson:spec
 
 === Running adhoc tests using the source code directly
 
@@ -144,13 +153,12 @@ Run an adhoc test in the file sample.rb in the same top-level directory as this 
 
 === Building and installing the gem locally
 
-  rake package
+  bundle exec rake build
   gem install pkg/jnlp-<version>.gem
 
 === Releasing a new version to http://rubygems.org/
 
-  rake package
-  gem push pkg/jnlp-<version>.gem
+  bundle exec rake release
 
 === TODO
 
