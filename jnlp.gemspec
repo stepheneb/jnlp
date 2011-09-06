@@ -1,5 +1,4 @@
-GEM_ROOT = File.expand_path(File.dirname(__FILE__))
-$:.unshift File.join(GEM_ROOT, 'lib')
+$:.push File.expand_path("../lib", __FILE__)  
 require 'jnlp'
 
 Gem::Specification.new do |s|
@@ -21,9 +20,13 @@ Gem::Specification.new do |s|
 
   s.files =  Dir.glob("{lib,spec}/**/*.{rb}")
 
-  s.add_runtime_dependency('nokogiri', ">= 1.4.4", "<= 1.5")  
+  s.add_runtime_dependency('nokogiri', ">= 1.4.4", "<= 1.5")
+
+  s.add_development_dependency('rake')
   s.add_development_dependency("rspec", '~> 2.6')
   s.add_development_dependency("ci_reporter", '~> 1.6')
+  s.add_development_dependency('rdoc', '~> 3.9.4')
+  s.add_development_dependency('yard', '~> 0.7.2')
   
   s.post_install_message = <<-POST_INSTALL_MESSAGE
 

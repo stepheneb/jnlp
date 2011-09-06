@@ -6,3 +6,4 @@ spec/reports
 .yardoc
 ydoc
 *.gem
+Gemfile.lock
